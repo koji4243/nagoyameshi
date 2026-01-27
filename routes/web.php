@@ -30,4 +30,5 @@ Route::get('users/{user}', [Admin\UserController::class, 'show'])->name('users.s
 
 Route::resource('restaurants', Admin\RestaurantController::class);
 
+Route::resource('categories', Admin\CategoryController::class)->only(['index', 'store', 'update', 'destroy']);
 });
