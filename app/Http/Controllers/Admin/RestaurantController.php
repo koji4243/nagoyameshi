@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Restaurant;
 use App\Models\Category;
+use App\Models\RegularHoliday;
 
 class RestaurantController extends Controller
 {
@@ -27,8 +28,9 @@ class RestaurantController extends Controller
     }
     public function create() {
         $categories = Category::all();
+        $regular_holidays = RegularHoliday::all();
 
-        return view('admin.restaurants.create', compact('categories'));
+        return view('admin.restaurants.create', compact('categories', 'regular_holidays'));
     }
     public function store(Request $request) {
         $request->validate([
@@ -64,6 +66,9 @@ class RestaurantController extends Controller
         $category_ids = array_filter($request->input('category_ids'));
         $restaurant->categories()->sync($category_ids);
 
+        $regular_holiday_ids = $request->input('regular_holiday_ids');
+        $restaurant->regular_holidays()->sync($regular_holiday_ids);
+
         return redirect()->route('admin.restaurants.index')->with('flash_message', '店舗を登録しました。');
     }
     public function edit(Restaurant $restaurant) {
@@ -71,7 +76,9 @@ class RestaurantController extends Controller
         // 設定されたカテゴリのIDを配列化する
         $category_ids = $restaurant->categories->pluck('id')->toArray();
 
-        return view('admin.restaurants.edit', compact('restaurant', 'categories', 'category_ids'));
+        $regular_holidays = RegularHoliday::all();
+
+        return view('admin.restaurants.edit', compact('restaurant', 'categories', 'category_ids', 'regular_holidays'));
     }
     public function update(Request $request, Restaurant $restaurant) {
         $request->validate([
@@ -103,6 +110,9 @@ class RestaurantController extends Controller
 
         $category_ids = array_filter($request->input('category_ids'));
         $restaurant->categories()->sync($category_ids);
+
+        $regular_holiday_ids = $request->input('regular_holiday_ids');
+        $restaurant->regular_holidays()->sync($regular_holiday_ids);
 
         return redirect()->route('admin.restaurants.show', $restaurant)->with('flash_message', '店舗を編集しました。');
     }
