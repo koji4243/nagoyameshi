@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\UserController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,8 +17,8 @@ use App\Http\Controllers\Admin\UserController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware' => 'guest:admin'], function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 });
 
 require __DIR__.'/auth.php';
