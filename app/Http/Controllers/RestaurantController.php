@@ -10,7 +10,6 @@ class RestaurantController extends Controller
 {
     public function index(Request $request) {
         $keyword = $request->input('keyword');
-dd($request);
         $category_id = $request->input('category_id');
 
         $price = $request->input('price');
@@ -52,5 +51,8 @@ dd($request);
         $total = $restaurants->total();
 
         return view('restaurants.index', compact('keyword', 'category_id', 'price', 'sorts', 'sorted', 'restaurants', 'categories', 'total'));
+    }
+    public function show(Restaurant $restaurant) {
+        return view('restaurants.show', compact('restaurant'));
     }
 }
