@@ -8,6 +8,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\ReviewController;
+
 
 
 /*
@@ -29,6 +31,8 @@ Route::group(['middleware' => 'guest:admin'], function () {
     Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::resource('user', UserController::class)->only(['index', 'edit', 'update']);
 
+        Route::resource('restaurants.reviews', ReviewController::class)->only(['index']);
+
         Route::group(['middleware' => [NotSubscribed::class]], function () {
             Route::get('subscription/create', [SubscriptionController::class, 'create'])->name('subscription.create');
             Route::post('subscription', [SubscriptionController::class, 'store'])->name('subscription.store');
@@ -38,6 +42,8 @@ Route::group(['middleware' => 'guest:admin'], function () {
             Route::patch('subscription', [SubscriptionController::class, 'update'])->name('subscription.update');
             Route::get('subscription/cancel', [SubscriptionController::class, 'cancel'])->name('subscription.cancel');
             Route::delete('subscription', [SubscriptionController::class, 'destroy'])->name('subscription.destroy');
+
+            Route::resource('restaurants.reviews', ReviewController::class)->only(['create', 'store', 'edit', 'update', 'destroy']);
         });
     });
 });
