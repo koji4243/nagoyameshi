@@ -11,13 +11,13 @@ class RestaurantController extends Controller
     public function index(Request $request) {
         $keyword = $request->input('keyword');
         $category_id = $request->input('category_id');
-
+        $popular = $request->input( 'popular desc');
         $price = $request->input('price');
-
         $sorts = [
             '掲載日が新しい順' => 'created_at desc',
             '価格が安い順' => 'lowest_price asc',
-            '評価が高い順' => 'rating desc'
+            '評価が高い順' => 'rating desc',
+            '予約数が多い順' => 'popular desc'
         ];
         $sort_query = [];
         $sorted = 'created_at desc';
@@ -43,10 +43,11 @@ class RestaurantController extends Controller
             })->sortable($sort_query)->orderBy('created_at', 'desc')->paginate(15);
         } elseif ($price) {
             $restaurants = Restaurant::where('lowest_price', '<=', $price)->sortable($sort_query)->orderBy('created_at', 'desc')->paginate(15);
-        } else {
+        } elseif($popular){
+            $restaurants = Restaurant::withCount('reservations')->orderBy('reservations_count', 'desc')->get();
+        } else{
             $restaurants = Restaurant::sortable($sort_query)->orderBy('created_at', 'desc')->paginate(15);
         }
-
         $categories = Category::all();
 
         $total = $restaurants->total();
