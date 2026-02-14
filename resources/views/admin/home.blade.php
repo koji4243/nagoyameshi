@@ -45,6 +45,16 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="col">
+                        <div class="card bg-light">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">総レビュー数</h5>
+                                <p class="card-text">{{ $total_reviews }}件</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="col">
                         <div class="card bg-light">
                             <div class="card-body text-center">

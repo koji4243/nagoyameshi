@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Restaurant;
 use App\Models\Reservation;
-
+use App\Models\Review;
 
 class HomeController extends Controller
 {
@@ -19,7 +19,8 @@ class HomeController extends Controller
         $total_restaurants = Restaurant::count();
         $total_reservations = Reservation::count();
         $sales_for_this_month = 300 * $total_premium_users;
+        $total_reviews = Review::count();
 
-        return view('admin.home', compact('total_users', 'total_premium_users', 'total_free_users', 'total_restaurants', 'total_reservations', 'sales_for_this_month'));
+        return view('admin.home', compact('total_users', 'total_premium_users', 'total_free_users', 'total_restaurants', 'total_reservations', 'sales_for_this_month', 'total_reviews'));
     }
 }

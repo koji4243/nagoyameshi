@@ -177,6 +177,18 @@
                             @endif
                         </div>
                     </div>
+
+                    <div class="row pb-2 mb-2 border-bottom">
+                        <div class="col-2">
+                            <span class="fw-bold">レビュー</span>
+                        </div>
+                        <ul class="list-unstyled">
+                            @foreach($restaurant->reviews()->orderBy('created_at', 'desc')->get() as $review)
+                                <li class="nagoyameshi-dotted fs-sm-6 my-2">{{ $review->content }}
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

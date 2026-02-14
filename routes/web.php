@@ -13,6 +13,7 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\TermController;
+use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
 
 
 
@@ -77,4 +78,6 @@ Route::resource('categories', Admin\CategoryController::class)->only(['index', '
 Route::resource('company', Admin\CompanyController::class)->only(['index', 'edit', 'update']);
 
 Route::resource('terms', Admin\TermController::class)->only(['index', 'edit', 'update']);
+
+Route::resource('reviews', AdminReviewController::class,)->only(['index', 'destroy']);
 });
